@@ -1,43 +1,29 @@
 <!DOCTYPE html>
-<html >
-<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ML API</title>
-<!--  <link rel="style"href="style.css">-->
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<!--    <link rel="stylesheet" href="styles.css">-->
+    <meta charset="UTF-8">
+    <title>Crop Recommendation System</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
- <div class="login">
-	<h1>Crop Prediction Model</h1>
-    <!-- N	P	K	temperature	humidity	ph	rainfall	label -->
-     <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="N" placeholder="Nitrogen" required="required" />
-        <input type="text" name="P" placeholder="Phosphorus" required="required" />
-		<input type="text" name="K" placeholder="Potassium" required="required" />
-        <input type="text" name="temperature" placeholder="temperature" required="required" />
-        <input type="text" name="humidity" placeholder="humidity" required="required" />
-		<input type="text" name="pH" placeholder="pH" required="required" />
-        <input type="text" name="rainfall" placeholder="rainfall" required="required" />
+    <div class="container">
+        <h1>🌾 Crop Prediction System 🌿</h1>
 
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
-    </form>
+        <form action="/predict" method="POST">
+            <input type="number" name="N" step="any" placeholder="Nitrogen (N)" required>
+            <input type="number" name="P" step="any" placeholder="Phosphorus (P)" required>
+            <input type="number" name="K" step="any" placeholder="Potassium (K)" required>
+            <input type="number" name="temperature" step="any" placeholder="Temperature (°C)" required>
+            <input type="number" name="humidity" step="any" placeholder="Humidity (%)" required>
+            <input type="number" name="ph" step="any" placeholder="pH Level" required>
+            <input type="number" name="rainfall" step="any" placeholder="Rainfall (mm)" required>
 
-   <br>
-   <br>
-     <h1 id="predict">
-   {{ prediction_text }}
-     </h1>
+            <button type="submit">Predict Crop</button>
+        </form>
 
- </div>
-
-
+        {% if prediction_text %}
+            <h2>{{ prediction_text }}</h2>
+        {% endif %}
+    </div>
 </body>
 </html>
