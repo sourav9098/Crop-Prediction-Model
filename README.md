@@ -1,1 +1,1 @@
-CROP Prediction System Using Flask and Machine Learning
+CROP Prediction System Using Machine Learing Algorithm 
