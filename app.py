@@ -1,17 +1,14 @@
 from flask import Flask, render_template, request
 import numpy as np
 import pickle
-import os
-# Create flask app
+
+# Initialize Flask app
 app = Flask(__name__)
-model = pickle.load(open("model_best_model.pkl", "rb"))
-# Labels mapping
-label_mapping = [
-    'apple', 'banana', 'blackgram', 'chickpea', 'coconut', 'coffee', 'cotton',
-    'grapes', 'jute', 'kidneybeans', 'lentil', 'maize', 'mango', 'mothbeans',
-    'mungbean', 'muskmelon', 'orange', 'papaya', 'pigeonpeas', 'pomegranate',
-    'rice', 'watermelon'
-]
+
+# Load the trained model, scaler, and label encoder
+model = pickle.load(open("best_crop_model.pkl", "rb"))
+scaler = pickle.load(open("crop_scaler.pkl", "rb"))
+le = pickle.load(open("label_encoder.pkl", "rb"))
 
 @app.route('/')
 def home():
@@ -20,6 +17,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        # Get input features from the form
         features = [
             float(request.form['N']),
             float(request.form['P']),
@@ -29,12 +27,19 @@ def predict():
             float(request.form['ph']),
             float(request.form['rainfall'])
         ]
-        final_features = np.array(features).reshape(1, -1)
-        prediction = model.predict(final_features)[0]
-        predicted_crop = label_mapping[prediction]
-        return render_template('index.html', prediction_text=f"Recommended Crop: {predicted_crop}")
-    except Exception as e:
-        return f"Error: {e}"
 
-if __name__ == '__main__':
+        # Scale the features using the same scaler used during training
+        final_input = np.array(features).reshape(1, -1)
+        scaled_input = scaler.transform(final_input)
+
+        # Predict and decode the crop label
+        prediction = model.predict(scaled_input)[0]
+        predicted_crop = le.inverse_transform([prediction])[0]
+
+        return render_template('index.html', prediction_text=f"🌾 Recommended Crop: {predicted_crop.capitalize()}")
+
+    except Exception as e:
+        return render_template('index.html', prediction_text=f"❌ Error: {str(e)}")
+
+if __name__ == "__main__":
     app.run(debug=True)
