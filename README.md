@@ -65,8 +65,8 @@ After creating model ,we integrate that model with beautiful UI. for the UI part
 //Working Project Video
 
 
+https://github.com/user-attachments/assets/059ac09e-7e61-4acd-9dce-6e51ba764af4
 
-Screen Recording 2025-07-27 045034
 
   
 
