@@ -52,10 +52,21 @@ Modern agriculture requires intelligent decision-making based on data. The syste
 ---
 
 Dataset Link :: "https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset"
+
+
 // Model Deployment
+
+
 After creating model ,we integrate that model with beautiful UI. for the UI part we used HTML,CSS,JS and Flask.
 
 <img width="535" height="627" alt="Screenshot 2025-07-27 044927" src="https://github.com/user-attachments/assets/f6de04ef-d3c2-40a3-b254-f780623fc154" />
+
+
+//Working Project Video
+
+
+
+Screen Recording 2025-07-27 045034
 
   
 
